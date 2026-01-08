@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { NavLink, useLocation } from "react-router-dom";
 import { 
   LayoutDashboard, 
   MessageSquareWarning, 
@@ -7,27 +8,29 @@ import {
   Settings, 
   ChevronLeft,
   ChevronRight,
-  Zap
+  Zap,
+  Map
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface NavItem {
   icon: React.ElementType;
   label: string;
+  path: string;
   badge?: number;
-  active?: boolean;
 }
 
 const navItems: NavItem[] = [
-  { icon: LayoutDashboard, label: "Dashboard", active: true },
-  { icon: MessageSquareWarning, label: "Complaints", badge: 24 },
-  { icon: TrendingUp, label: "Escalations", badge: 8 },
-  { icon: BarChart3, label: "Analytics" },
-  { icon: Settings, label: "Settings" },
+  { icon: LayoutDashboard, label: "Dashboard", path: "/" },
+  { icon: Map, label: "Maps", path: "/maps" },
+  { icon: TrendingUp, label: "Escalations", path: "/escalations", badge: 8 },
+  { icon: BarChart3, label: "Analytics", path: "/analytics" },
+  { icon: Settings, label: "Settings", path: "/settings" },
 ];
 
 export function Sidebar() {
   const [collapsed, setCollapsed] = useState(false);
+  const location = useLocation();
 
   return (
     <aside
@@ -39,14 +42,14 @@ export function Sidebar() {
       <div className="flex h-full flex-col">
         {/* Logo */}
         <div className="flex h-16 items-center justify-between border-b border-sidebar-border px-4">
-          <div className="flex items-center gap-2">
+          <NavLink to="/" className="flex items-center gap-2">
             <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary">
               <Zap className="h-5 w-5 text-primary-foreground" />
             </div>
             {!collapsed && (
               <span className="text-lg font-semibold text-foreground">Deadline</span>
             )}
-          </div>
+          </NavLink>
         </div>
 
         {/* Navigation */}
@@ -58,38 +61,43 @@ export function Sidebar() {
             Navigation
           </span>
           
-          {navItems.map((item) => (
-            <button
-              key={item.label}
-              className={cn(
-                "group flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200",
-                item.active
-                  ? "bg-sidebar-accent text-primary"
-                  : "text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
-              )}
-            >
-              <item.icon className={cn(
-                "h-5 w-5 flex-shrink-0 transition-colors",
-                item.active ? "text-primary" : "text-muted-foreground group-hover:text-foreground"
-              )} />
-              
-              {!collapsed && (
-                <>
-                  <span className="flex-1 text-left">{item.label}</span>
-                  {item.badge && (
-                    <span className={cn(
-                      "flex h-5 min-w-5 items-center justify-center rounded-full px-1.5 text-xs font-medium",
-                      item.active 
-                        ? "bg-primary text-primary-foreground" 
-                        : "bg-muted text-muted-foreground"
-                    )}>
-                      {item.badge}
-                    </span>
-                  )}
-                </>
-              )}
-            </button>
-          ))}
+          {navItems.map((item) => {
+            const isActive = location.pathname === item.path;
+            
+            return (
+              <NavLink
+                key={item.label}
+                to={item.path}
+                className={cn(
+                  "group flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200",
+                  isActive
+                    ? "bg-sidebar-accent text-primary"
+                    : "text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+                )}
+              >
+                <item.icon className={cn(
+                  "h-5 w-5 flex-shrink-0 transition-colors",
+                  isActive ? "text-primary" : "text-muted-foreground group-hover:text-foreground"
+                )} />
+                
+                {!collapsed && (
+                  <>
+                    <span className="flex-1 text-left">{item.label}</span>
+                    {item.badge && (
+                      <span className={cn(
+                        "flex h-5 min-w-5 items-center justify-center rounded-full px-1.5 text-xs font-medium",
+                        isActive 
+                          ? "bg-primary text-primary-foreground" 
+                          : "bg-muted text-muted-foreground"
+                      )}>
+                        {item.badge}
+                      </span>
+                    )}
+                  </>
+                )}
+              </NavLink>
+            );
+          })}
         </nav>
 
         {/* Collapse Toggle */}

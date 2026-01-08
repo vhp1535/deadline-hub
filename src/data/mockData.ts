@@ -342,16 +342,20 @@ export const policyRules: PolicyRule[] = [
   },
 ];
 
-// Map hotspots for heatmap/visualization
+// Map hotspots for heatmap/visualization - India locations
 export const mapHotspots: MapHotspot[] = [
-  { id: "h1", lat: 40.7128, lng: -74.006, complaintCount: 45, severity: "critical", region: "Northeast", slaCompliance: 78 },
-  { id: "h2", lat: 34.0522, lng: -118.2437, complaintCount: 32, severity: "high", region: "West", slaCompliance: 85 },
-  { id: "h3", lat: 41.8781, lng: -87.6298, complaintCount: 28, severity: "medium", region: "Midwest", slaCompliance: 92 },
-  { id: "h4", lat: 29.7604, lng: -95.3698, complaintCount: 18, severity: "low", region: "South", slaCompliance: 95 },
-  { id: "h5", lat: 47.6062, lng: -122.3321, complaintCount: 38, severity: "high", region: "West", slaCompliance: 81 },
-  { id: "h6", lat: 37.7749, lng: -122.4194, complaintCount: 52, severity: "critical", region: "West", slaCompliance: 72 },
-  { id: "h7", lat: 33.749, lng: -84.388, complaintCount: 22, severity: "medium", region: "South", slaCompliance: 89 },
-  { id: "h8", lat: 42.3601, lng: -71.0589, complaintCount: 35, severity: "high", region: "Northeast", slaCompliance: 83 },
+  { id: "h1", lat: 28.6139, lng: 77.2090, complaintCount: 58, severity: "critical", region: "Delhi NCR", slaCompliance: 72 },
+  { id: "h2", lat: 19.0760, lng: 72.8777, complaintCount: 45, severity: "high", region: "Mumbai", slaCompliance: 78 },
+  { id: "h3", lat: 13.0827, lng: 80.2707, complaintCount: 32, severity: "medium", region: "Chennai", slaCompliance: 85 },
+  { id: "h4", lat: 22.5726, lng: 88.3639, complaintCount: 28, severity: "high", region: "Kolkata", slaCompliance: 81 },
+  { id: "h5", lat: 12.9716, lng: 77.5946, complaintCount: 42, severity: "critical", region: "Bangalore", slaCompliance: 74 },
+  { id: "h6", lat: 17.3850, lng: 78.4867, complaintCount: 35, severity: "medium", region: "Hyderabad", slaCompliance: 88 },
+  { id: "h7", lat: 23.0225, lng: 72.5714, complaintCount: 22, severity: "low", region: "Ahmedabad", slaCompliance: 92 },
+  { id: "h8", lat: 26.9124, lng: 75.7873, complaintCount: 18, severity: "medium", region: "Jaipur", slaCompliance: 89 },
+  { id: "h9", lat: 21.1702, lng: 72.8311, complaintCount: 15, severity: "low", region: "Surat", slaCompliance: 94 },
+  { id: "h10", lat: 18.5204, lng: 73.8567, complaintCount: 38, severity: "high", region: "Pune", slaCompliance: 82 },
+  { id: "h11", lat: 26.8467, lng: 80.9462, complaintCount: 25, severity: "medium", region: "Lucknow", slaCompliance: 86 },
+  { id: "h12", lat: 30.7333, lng: 76.7794, complaintCount: 20, severity: "low", region: "Chandigarh", slaCompliance: 91 },
 ];
 
 // Analytics trend data
