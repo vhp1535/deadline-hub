@@ -13,9 +13,9 @@ import { AnalyticsCharts } from "@/components/dashboard/AnalyticsCharts";
 const Index = () => {
   return (
     <DashboardLayout>
-      <div className="space-y-6">
+      <div className="space-y-4 sm:space-y-6">
         {/* Overview Cards */}
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-3 grid-cols-2 sm:gap-4 lg:grid-cols-4">
           <OverviewCard
             title="Total Complaints"
             value="1,284"
@@ -55,14 +55,14 @@ const Index = () => {
         </div>
 
         {/* Main Content Grid */}
-        <div className="grid gap-6 lg:grid-cols-3">
-          {/* Complaints Table - Takes 2 columns */}
-          <div className="lg:col-span-2">
+        <div className="grid gap-4 sm:gap-6 lg:grid-cols-3">
+          {/* Complaints Table - Takes 2 columns on large screens */}
+          <div className="lg:col-span-2 order-2 lg:order-1">
             <ComplaintsTable />
           </div>
 
-          {/* Escalation Timeline - Takes 1 column */}
-          <div>
+          {/* Escalation Timeline - Takes 1 column on large screens */}
+          <div className="order-1 lg:order-2">
             <EscalationTimeline />
           </div>
         </div>

@@ -1,8 +1,9 @@
 import { cn } from "@/lib/utils";
-import { AlertTriangle, Clock, CheckCircle2, XCircle } from "lucide-react";
+import { AlertTriangle, Clock, CheckCircle2, XCircle, ChevronRight } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
 
 interface Complaint {
   id: string;
@@ -82,35 +83,36 @@ const statusConfig = {
 export function ComplaintsTable() {
   return (
     <div className="glass-card animate-fade-in">
-      <div className="border-b border-border p-5">
-        <div className="flex items-center justify-between">
+      <div className="border-b border-border p-4 sm:p-5">
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h3 className="text-lg font-semibold text-foreground">Priority Complaints</h3>
-            <p className="text-sm text-muted-foreground">Complaints requiring immediate attention</p>
+            <h3 className="text-base font-semibold text-foreground sm:text-lg">Priority Complaints</h3>
+            <p className="text-xs text-muted-foreground sm:text-sm">Complaints requiring immediate attention</p>
           </div>
-          <Badge variant="secondary" className="bg-primary/10 text-primary">
+          <Badge variant="secondary" className="w-fit bg-primary/10 text-primary">
             {complaints.length} Active
           </Badge>
         </div>
       </div>
 
-      <div className="overflow-x-auto">
+      {/* Desktop Table */}
+      <div className="hidden overflow-x-auto md:block">
         <table className="w-full">
           <thead>
             <tr className="border-b border-border">
-              <th className="px-5 py-3 text-left text-xs font-medium uppercase tracking-wider text-muted-foreground">
+              <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-muted-foreground sm:px-5">
                 Complaint ID
               </th>
-              <th className="px-5 py-3 text-left text-xs font-medium uppercase tracking-wider text-muted-foreground">
+              <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-muted-foreground sm:px-5">
                 Severity
               </th>
-              <th className="px-5 py-3 text-left text-xs font-medium uppercase tracking-wider text-muted-foreground">
+              <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-muted-foreground sm:px-5">
                 Status
               </th>
-              <th className="px-5 py-3 text-left text-xs font-medium uppercase tracking-wider text-muted-foreground">
+              <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-muted-foreground sm:px-5">
                 SLA Progress
               </th>
-              <th className="px-5 py-3 text-left text-xs font-medium uppercase tracking-wider text-muted-foreground">
+              <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-muted-foreground sm:px-5">
                 Assigned To
               </th>
             </tr>
@@ -125,25 +127,25 @@ export function ComplaintsTable() {
                   key={complaint.id}
                   className="group transition-colors hover:bg-secondary/50"
                 >
-                  <td className="px-5 py-4">
+                  <td className="px-4 py-4 sm:px-5">
                     <div>
                       <p className="font-medium text-foreground">{complaint.id}</p>
-                      <p className="text-sm text-muted-foreground">{complaint.title}</p>
+                      <p className="text-xs text-muted-foreground sm:text-sm">{complaint.title}</p>
                     </div>
                   </td>
-                  <td className="px-5 py-4">
+                  <td className="px-4 py-4 sm:px-5">
                     <Badge className={cn("gap-1", severityConfig[complaint.severity].color)}>
                       <SeverityIcon className="h-3 w-3" />
-                      {complaint.severity}
+                      <span className="hidden sm:inline">{complaint.severity}</span>
                     </Badge>
                   </td>
-                  <td className="px-5 py-4">
+                  <td className="px-4 py-4 sm:px-5">
                     <Badge variant="outline" className={cn("capitalize", statusConfig[complaint.status])}>
                       {complaint.status.replace("-", " ")}
                     </Badge>
                   </td>
-                  <td className="px-5 py-4">
-                    <div className="w-32 space-y-1">
+                  <td className="px-4 py-4 sm:px-5">
+                    <div className="w-24 space-y-1 sm:w-32">
                       <div className="flex items-center justify-between text-xs">
                         <span className={cn(
                           "font-medium",
@@ -162,14 +164,14 @@ export function ComplaintsTable() {
                       />
                     </div>
                   </td>
-                  <td className="px-5 py-4">
+                  <td className="px-4 py-4 sm:px-5">
                     <div className="flex items-center gap-2">
-                      <Avatar className="h-7 w-7 border border-border">
+                      <Avatar className="h-6 w-6 border border-border sm:h-7 sm:w-7">
                         <AvatarFallback className="bg-secondary text-xs">
                           {complaint.assignee.initials}
                         </AvatarFallback>
                       </Avatar>
-                      <span className="text-sm text-foreground">{complaint.assignee.name}</span>
+                      <span className="hidden text-sm text-foreground lg:inline">{complaint.assignee.name}</span>
                     </div>
                   </td>
                 </tr>
@@ -177,6 +179,64 @@ export function ComplaintsTable() {
             })}
           </tbody>
         </table>
+      </div>
+
+      {/* Mobile Cards */}
+      <div className="divide-y divide-border md:hidden">
+        {complaints.map((complaint) => {
+          const SeverityIcon = severityConfig[complaint.severity].icon;
+          const isUrgent = complaint.slaProgress >= 80;
+          
+          return (
+            <div
+              key={complaint.id}
+              className="p-4 transition-colors hover:bg-secondary/50"
+            >
+              <div className="flex items-start justify-between gap-3">
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2 mb-1">
+                    <p className="font-medium text-foreground text-sm">{complaint.id}</p>
+                    <Badge className={cn("gap-1 text-xs", severityConfig[complaint.severity].color)}>
+                      <SeverityIcon className="h-3 w-3" />
+                    </Badge>
+                  </div>
+                  <p className="text-xs text-muted-foreground truncate">{complaint.title}</p>
+                </div>
+                <Button variant="ghost" size="icon" className="h-8 w-8 flex-shrink-0">
+                  <ChevronRight className="h-4 w-4" />
+                </Button>
+              </div>
+              
+              <div className="mt-3 flex items-center justify-between gap-4">
+                <Badge variant="outline" className={cn("capitalize text-xs", statusConfig[complaint.status])}>
+                  {complaint.status.replace("-", " ")}
+                </Badge>
+                
+                <div className="flex items-center gap-2">
+                  <Avatar className="h-5 w-5 border border-border">
+                    <AvatarFallback className="bg-secondary text-[10px]">
+                      {complaint.assignee.initials}
+                    </AvatarFallback>
+                  </Avatar>
+                  <span className={cn(
+                    "text-xs font-medium",
+                    isUrgent ? "text-destructive" : "text-muted-foreground"
+                  )}>
+                    {complaint.slaRemaining}
+                  </span>
+                </div>
+              </div>
+              
+              <Progress 
+                value={complaint.slaProgress} 
+                className={cn(
+                  "h-1 mt-3",
+                  isUrgent && "[&>div]:bg-destructive"
+                )}
+              />
+            </div>
+          );
+        })}
       </div>
     </div>
   );
