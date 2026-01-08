@@ -80,27 +80,27 @@ export function OverviewCard({
   }[changeType];
 
   return (
-    <div className="glass-card p-5 glow-effect animate-fade-in">
-      <div className="flex items-start justify-between">
-        <div className="space-y-3">
-          <div className={cn("flex h-10 w-10 items-center justify-center rounded-lg", iconBgClass)}>
-            <Icon className={cn("h-5 w-5", iconColorClass)} />
+    <div className="glass-card p-3 sm:p-5 glow-effect animate-fade-in">
+      <div className="flex items-start justify-between gap-2">
+        <div className="space-y-2 sm:space-y-3 flex-1 min-w-0">
+          <div className={cn("flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-lg flex-shrink-0", iconBgClass)}>
+            <Icon className={cn("h-4 w-4 sm:h-5 sm:w-5", iconColorClass)} />
           </div>
           <div>
-            <p className="text-sm font-medium text-muted-foreground">{title}</p>
-            <p className="text-3xl font-semibold text-foreground">{value}</p>
+            <p className="text-xs sm:text-sm font-medium text-muted-foreground truncate">{title}</p>
+            <p className="text-xl sm:text-3xl font-semibold text-foreground">{value}</p>
           </div>
           {change && (
-            <p className={cn("text-sm font-medium", changeColorClass)}>
+            <p className={cn("text-xs sm:text-sm font-medium truncate", changeColorClass)}>
               {change}
             </p>
           )}
         </div>
 
         {progress !== undefined && (
-          <div className="relative flex items-center justify-center">
+          <div className="relative flex items-center justify-center flex-shrink-0 scale-75 sm:scale-100 origin-top-right">
             <ProgressRing progress={progress} variant={variant} />
-            <span className="absolute text-sm font-semibold text-foreground">
+            <span className="absolute text-xs sm:text-sm font-semibold text-foreground">
               {progress}%
             </span>
           </div>

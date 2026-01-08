@@ -63,7 +63,7 @@ interface LineChartWrapperProps {
     name?: string;
   }[];
   xAxisKey?: string;
-  height?: number;
+  height?: number | string;
   showGrid?: boolean;
   showLegend?: boolean;
   className?: string;
@@ -195,7 +195,7 @@ interface BarChartWrapperProps {
     name?: string;
   }[];
   xAxisKey?: string;
-  height?: number;
+  height?: number | string;
   showGrid?: boolean;
   showLegend?: boolean;
   layout?: "horizontal" | "vertical";
