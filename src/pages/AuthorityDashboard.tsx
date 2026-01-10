@@ -1,18 +1,18 @@
 import { useState } from "react";
 import { DashboardLayout } from "@/components/dashboard/DashboardLayout";
-import { useAuth, DEMO_ACCOUNTS } from "@/contexts/AuthContext";
+import { useAuth } from "@/contexts/AuthContext";
+import { ProfileHeader } from "@/components/auth/ProfileHeader";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { KPICard } from "@/components/ui/KPICard";
 import { LiveIndicator } from "@/components/ui/LiveIndicator";
 import { LeafletMap } from "@/components/ui/LeafletMap";
-import { escalations, mapHotspots, complaints } from "@/data/mockData";
+import { escalations, mapHotspots } from "@/data/mockData";
 import { 
   AlertTriangle, 
   TrendingUp, 
   MapPin,
   Clock,
-  User,
   ChevronRight,
   RefreshCw,
   CheckCircle2,
@@ -29,7 +29,7 @@ const ESCALATION_STATUS = {
 };
 
 export default function AuthorityDashboard() {
-  const { user, switchRole } = useAuth();
+  const { user } = useAuth();
   const [selectedHotspot, setSelectedHotspot] = useState<string | null>(null);
 
   // Filter escalations for authority view
@@ -56,36 +56,11 @@ export default function AuthorityDashboard() {
   return (
     <DashboardLayout>
       <div className="space-y-6">
-        {/* Demo Mode Banner */}
-        <div className="glass-card p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-primary/30">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center">
-              <User className="w-5 h-5 text-primary" />
-            </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="font-semibold">{user?.name || "Authority Demo"}</span>
-                <Badge variant="outline" className="bg-primary/10 text-primary border-primary/30">
-                  Demo Mode
-                </Badge>
-              </div>
-              <p className="text-sm text-muted-foreground">Higher Authority - Escalations & Hotspots</p>
-            </div>
-          </div>
-          <div className="flex flex-wrap gap-2">
-            {DEMO_ACCOUNTS.filter(a => a.role !== "authority").map((account) => (
-              <Button
-                key={account.role}
-                variant="outline"
-                size="sm"
-                onClick={() => switchRole(account.role)}
-                className="text-xs"
-              >
-                Switch to {account.role.charAt(0).toUpperCase() + account.role.slice(1)}
-              </Button>
-            ))}
-          </div>
-        </div>
+        {/* Profile Header */}
+        <ProfileHeader 
+          title="Authority Dashboard" 
+          subtitle="Escalations & Hotspots" 
+        />
 
         {/* KPIs */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
