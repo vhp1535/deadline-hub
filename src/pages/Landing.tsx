@@ -61,7 +61,8 @@ export default function Landing() {
       case "admin": return "/dashboard";
       case "officer": return "/officer";
       case "authority": return "/authority";
-      default: return "/submit";
+      case "citizen": return "/citizen";
+      default: return "/citizen";
     }
   };
 
