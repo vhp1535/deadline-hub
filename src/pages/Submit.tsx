@@ -43,6 +43,7 @@ interface LocationData {
   lat: number;
   lng: number;
   address: string;
+  region?: string;
 }
 
 export default function Submit() {
@@ -126,11 +127,11 @@ export default function Submit() {
       slaRemaining: severity === "critical" ? "4h" : severity === "high" ? "12h" : severity === "medium" ? "24h" : "48h",
       slaDuration: severity === "critical" ? 4 : severity === "high" ? 12 : severity === "medium" ? 24 : 48,
       category,
-      location: location || {
-        lat: 28.6139,
-        lng: 77.2090,
-        address: manualAddress || "Address not provided",
-        region: "Delhi NCR",
+      location: {
+        lat: location?.lat || 28.6139,
+        lng: location?.lng || 77.2090,
+        address: location?.address || manualAddress || "Address not provided",
+        region: location?.region || "Delhi NCR",
       },
       assignee: {
         id: "pending",

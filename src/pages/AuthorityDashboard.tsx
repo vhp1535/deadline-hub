@@ -47,9 +47,10 @@ export default function AuthorityDashboard() {
     id: h.id,
     lat: h.lat,
     lng: h.lng,
-    title: `${h.region}: ${h.complaintCount} complaints`,
+    label: `${h.region}: ${h.complaintCount} complaints`,
     severity: h.severity,
-    status: h.slaCompliance < 80 ? "escalated" as const : "in-progress" as const,
+    count: h.complaintCount,
+    slaCompliance: h.slaCompliance,
   }));
 
   return (
@@ -122,14 +123,14 @@ export default function AuthorityDashboard() {
                 <MapPin className="w-5 h-5 text-primary" />
                 Escalation Hotspots
               </h2>
-              <LiveIndicator status="live" size="sm" />
+              <LiveIndicator isLive size="sm" />
             </div>
             <div className="h-[300px] sm:h-[400px] rounded-xl overflow-hidden border border-border">
               <LeafletMap
                 markers={hotspotMarkers}
                 center={[22.5, 82.5]}
                 zoom={5}
-                showHeatmap
+                viewMode="heatmap"
               />
             </div>
             <div className="mt-4 grid grid-cols-2 sm:grid-cols-4 gap-2">

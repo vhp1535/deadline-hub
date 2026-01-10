@@ -280,9 +280,8 @@ export default function Track() {
                     id: complaint.id,
                     lat: complaint.location.lat,
                     lng: complaint.location.lng,
-                    title: complaint.title,
+                    label: complaint.title,
                     severity: complaint.severity,
-                    status: complaint.status,
                   }]}
                   center={[complaint.location.lat, complaint.location.lng]}
                   zoom={14}

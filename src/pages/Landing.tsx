@@ -103,7 +103,7 @@ export default function Landing() {
 
         <div className="max-w-7xl mx-auto text-center relative z-10">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-6">
-            <LiveIndicator status="live" label="System Active" />
+            <LiveIndicator isLive label="System Active" />
           </div>
 
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
@@ -144,13 +144,17 @@ export default function Landing() {
               title="Total Complaints"
               value={kpiData.totalComplaints.toLocaleString()}
               icon={FileText}
-              trend={{ value: kpiData.monthlyChange.complaints, isPositive: false }}
+              change="this month"
+              changeType="neutral"
+              changeValue={kpiData.monthlyChange.complaints}
             />
             <KPICard
               title="Active Cases"
               value={kpiData.activeComplaints}
               icon={Users}
-              trend={{ value: Math.abs(kpiData.monthlyChange.active), isPositive: true }}
+              change="vs last month"
+              changeType="negative"
+              changeValue={Math.abs(kpiData.monthlyChange.active)}
               variant="warning"
             />
             <KPICard
