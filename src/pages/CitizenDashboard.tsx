@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
-import { useAuth, DEMO_ACCOUNTS } from "@/contexts/AuthContext";
+import { useAuth } from "@/contexts/AuthContext";
 import { useComplaints } from "@/contexts/ComplaintContext";
+import { ProfileHeader } from "@/components/auth/ProfileHeader";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -13,8 +14,6 @@ import {
   AlertTriangle,
   Plus,
   Search,
-  LogOut,
-  User,
   ArrowRight
 } from "lucide-react";
 
@@ -27,7 +26,7 @@ const STATUS_CONFIG: Record<string, { label: string; variant: "default" | "secon
 };
 
 export default function CitizenDashboard() {
-  const { user, logout, switchRole } = useAuth();
+  const { user } = useAuth();
   const { complaints } = useComplaints();
 
   // Filter complaints for this citizen (in real app, would filter by user ID)
@@ -43,51 +42,13 @@ export default function CitizenDashboard() {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Demo Mode Banner */}
-      <div className="bg-primary/10 border-b border-primary/20 px-4 py-2">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Badge variant="outline" className="bg-primary/20">Demo Mode</Badge>
-            <span className="text-sm text-muted-foreground">
-              Logged in as <strong>{user?.name}</strong> ({user?.role})
-            </span>
-          </div>
-          <div className="flex items-center gap-2">
-            <span className="text-xs text-muted-foreground">Switch role:</span>
-            {DEMO_ACCOUNTS.map(acc => (
-              <Button
-                key={acc.role}
-                variant={user?.role === acc.role ? "default" : "ghost"}
-                size="sm"
-                onClick={() => switchRole(acc.role)}
-                className="text-xs h-7"
-              >
-                {acc.role}
-              </Button>
-            ))}
-          </div>
-        </div>
+      {/* Profile Header */}
+      <div className="max-w-7xl mx-auto px-4 pt-6">
+        <ProfileHeader 
+          title="Citizen Dashboard" 
+          subtitle="Track and manage your complaints" 
+        />
       </div>
-
-      {/* Header */}
-      <header className="border-b bg-card">
-        <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
-          <div>
-            <h1 className="text-2xl font-bold">My Dashboard</h1>
-            <p className="text-muted-foreground">Track and manage your complaints</p>
-          </div>
-          <div className="flex items-center gap-3">
-            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <User className="h-4 w-4" />
-              {user?.email}
-            </div>
-            <Button variant="outline" size="sm" onClick={logout}>
-              <LogOut className="h-4 w-4 mr-2" />
-              Sign Out
-            </Button>
-          </div>
-        </div>
-      </header>
 
       <main className="max-w-7xl mx-auto px-4 py-8">
         {/* Quick Actions */}
