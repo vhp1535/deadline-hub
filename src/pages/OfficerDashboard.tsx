@@ -122,7 +122,7 @@ export default function OfficerDashboard() {
           <div className="p-4 sm:p-6 border-b border-border flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div className="flex items-center gap-3">
               <h2 className="text-lg font-semibold">My Assigned Complaints</h2>
-              <LiveIndicator status="live" size="sm" />
+              <LiveIndicator isLive size="sm" />
             </div>
             <div className="flex items-center gap-2 overflow-x-auto pb-2 sm:pb-0">
               <Filter className="w-4 h-4 text-muted-foreground flex-shrink-0" />
